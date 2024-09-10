@@ -8,5 +8,4 @@ app
 	})
 	.then(() => {
 		console.log("http server running");
-	})
-
+	});
