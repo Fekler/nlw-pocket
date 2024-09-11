@@ -7,7 +7,7 @@ import {
 import { createGoalRoute } from "./routes/create-goals";
 import { getPendingGoalsRoute } from "./routes/get-pending-goals";
 import { createGoalCompletionRoute } from "./routes/create-completions";
-import { getWeekPendingGoals } from "../business/get-week-pending-goals";
+import { getWeekSummaryRoute } from "./routes/get-week-summary";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -15,16 +15,9 @@ app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 
 app.register(createGoalRoute);
-//app.register(getPendingGoalsRoute);
+app.register(getPendingGoalsRoute);
 app.register(createGoalCompletionRoute);
-app.get("/pending-goals", async () => {
-		console.log("entrou 1");
-
-	const { pendingGoals } = await getWeekPendingGoals();
-	console.log(pendingGoals);
-
-	return { pendingGoals };
-});
+app.register(getWeekSummaryRoute);
 
 app
 	.listen({
