@@ -12,5 +12,10 @@ export async function createGoal({
 }: ICreateGoalRequest) {
 	const result = await db
 		.insert(goals)
-		.values({ title, desiredWeeklyFrequency });
+		.values({ title, desiredWeeklyFrequency })
+		.returning();
+
+	const goal = result[0];
+
+	return { goal };
 }
